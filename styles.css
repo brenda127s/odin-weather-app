@@ -1,3 +1,26 @@
+@media screen and (max-width: 320px) {
+    .weather-col {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* .search button {
+        width: 40px;
+        height: 40px;
+    } */
+}
+
+@media screen and (max-width: 1024px) {
+    /* .weather-col {
+        margin: 10px 70px;
+    }
+    .weather-col > p {
+        font-size: 28px;
+    } */
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -10,24 +33,25 @@ body {
 }
 
 .card {
-    width: 90%;
-    max-width: 470px;
+    width: 100%;
+    min-height: 100vh;
     background: linear-gradient(135deg, #00feba, #5b548a);
     color: #fff;
-    margin: 100px auto 0;
-    border-radius: 20px;
+    margin: auto 0;
     padding: 40px 35px;
     text-align: center;
 }
 
 .search {
     width: 100%;
+    /* max-width: 460px; */
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 
 .search input {
+    max-width: 400px;
     border: 0;
     outline: 0;
     background: #ebfffc;
@@ -54,20 +78,46 @@ body {
     width: 16px;
 }
 
+.temp-button  {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.temp-button button {
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    color: #505050;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.weather-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.weather-info > p {
+    font-size: 20px;
+}
+
 .weather-icon {
     width: 170px;
     margin: 30px;
 }
 
 .weather h1 {
-    font-size: 80px;
+    font-size: 70px;
     font-weight: 500;
 }
 
 .weather h2 {
-    font-size: 45px;
+    font-size: 50px;
     font-weight: 400;
-    margin-top: -10px;
+    /* margin-top: -10px; */
 }
 
 .detail {
@@ -76,7 +126,27 @@ body {
     justify-content: space-between;
     padding: 0 20px;
     margin-top: 50px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 60px 30px;
+    border-radius: 10px;
+    /* margin: 50px 140px; */
 }
+
+.description {
+    font-size: 25px;
+}
+
+.weather-col {
+    display: flex;
+    justify-content: space-between;
+    font-size: 28px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding:  40px 30px;
+    border-radius: 10px;
+    margin-top: 20px;
+    /* margin: 10px 140px; */
+}
+
 
 .col {
     display: flex;
