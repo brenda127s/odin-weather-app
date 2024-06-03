@@ -17,11 +17,11 @@ async function checkWeather(city) {
     let localTime = d.getTime()
     let localOffset = d.getTimezoneOffset() * 60000
     let utc = localTime + localOffset
-    var atlanta = utc + (1000 * -14400)
-    nd = new Date(atlanta)
+    let cityTime = utc + (1000 * data.timezone)
+    nd = new Date(cityTime)
     console.log(nd);
 
-    const formattedDate = convertToStandardTime(nd / 1000);
+    const formattedDate = convertToStandardTime(nd.getTime() / 1000);
     const sunrise = convertToStandardTime(data.sys.sunrise, true);
     const sunset = convertToStandardTime(data.sys.sunset, true);
 
@@ -32,9 +32,9 @@ async function checkWeather(city) {
     document.querySelector('.description').innerHTML = data.weather[0].description;
     document.querySelector('.humidity').innerHTML = data.main.humidity + '%';
     document.querySelector('.wind').innerHTML = data.wind.speed + 'km/h';
-    document.querySelector('.weather-icon').setAttribute('src', 'images/' + data.weather[0].main + '.png');
+    // document.querySelector('.weather-icon').setAttribute('src', 'images/' + data.weather[0].main + '.png');
 
-    setWeatherIcon(data.weather[0].main, nd);
+    setWeatherIcon(data.weather[0].main, nd, data.sys.sunrise, data.sys.sunset, data.timezone);
 
     if (isCelsius) {
         document.getElementById('temp-unit').innerHTML = '°C';
@@ -90,23 +90,55 @@ function updateBackground(date) {
         background = 'linear-gradient(180deg, #040e32, #363b92)';
         } 
     document.querySelector('.card').style.background = background;
+
 }
 
-function setWeatherIcon(weather, date) {
-    const hours = date.getHours();
-    let icon;
+function setWeatherIcon(weather, date, sunrise, sunset, timezone) {
+    const currentTime = date.getTime() / 1000;
+    const localSunrise = sunrise + timezone;
+    const localSunset = sunset + timezone;
 
-    if (hours >= 18 && hours < 22) {
+    let icon = weather; // Default weather icon
+
+    if (currentTime < localSunrise || currentTime > localSunset) {
         if (weather === 'Clear' || weather === 'Mist' || weather === 'Haze') {
-            icon = 'images/moon.png';
+            icon = 'moon';
         } else if (weather === 'Clouds' || weather === 'Drizzle' || weather === 'Fog' || weather === 'Rain' || weather === 'Snow') {
-            icon = 'images/CloudyNight.png';
+            icon = 'CloudyNight';
         } else {
-            icon = weather + '.png'; //Default weather icon
-        }
-        document.querySelector('.weather-icon').setAttribute('src', 'images/', icon);
-    }
-}
+            // 
+            icon = weather; //Default weather icon
+        }}
+        
+    if (currentTime > localSunrise || currentTime < localSunset) {
+        if (weather === 'Clear') {
+            icon = 'Clear';
+        } else if (weather === 'Mist') {
+            icon = 'Mist';
+        } else if (weather === 'Haze') {
+            icon = 'Haze';
+        } else if (weather === 'Drizzle') {
+            icon = 'Drizzle';
+        } else if (weather === 'Fog') {
+            icon = 'Fog';
+        } else if (weather === 'Snow') {
+            icon = 'Snow'; 
+        } else if (weather === 'Rain') {
+            icon = 'Rain';
+        } else {
+            icon = weather; //Default weather icon
+        }}
+    
+
+    // } else if (weather === 'Clear') {
+    //     icon = 'moon';
+    // } else if (weather === 'Clouds') {
+    //     icon = 'CloudyNight';
+    // }
+
+    document.querySelector('.weather-icon').setAttribute('src', 'images/' + icon + '.png');
+    console.log(icon);
+}    
 
 unitToggle.addEventListener('click', () => {
     isCelsius = !isCelsius;
