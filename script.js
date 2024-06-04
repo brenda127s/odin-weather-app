@@ -32,7 +32,6 @@ async function checkWeather(city) {
     document.querySelector('.description').innerHTML = data.weather[0].description;
     document.querySelector('.humidity').innerHTML = data.main.humidity + '%';
     document.querySelector('.wind').innerHTML = data.wind.speed + 'km/h';
-    // document.querySelector('.weather-icon').setAttribute('src', 'images/' + data.weather[0].main + '.png');
 
     setWeatherIcon(data.weather[0].main, nd, data.sys.sunrise, data.sys.sunset, data.timezone);
 
@@ -77,7 +76,6 @@ function celsiusToFahrenheit(celsius) {
 
 function updateBackground(date) {
     const hours = date.getHours();
-    console.log("Current hour: ", hours);
     let background;
 
     if (hours >= 6 && hours < 12) {
@@ -101,6 +99,7 @@ function setWeatherIcon(weather, date, sunrise, sunset, timezone) {
     let icon = weather; // Default weather icon
 
     if (currentTime < localSunrise || currentTime > localSunset) {
+        //Night time 
         if (weather === 'Clear' || weather === 'Mist' || weather === 'Haze') {
             icon = 'moon';
         } else if (weather === 'Clouds' || weather === 'Drizzle' || weather === 'Fog' || weather === 'Rain' || weather === 'Snow') {
@@ -128,17 +127,9 @@ function setWeatherIcon(weather, date, sunrise, sunset, timezone) {
         } else {
             icon = weather; //Default weather icon
         }}
-    
-
-    // } else if (weather === 'Clear') {
-    //     icon = 'moon';
-    // } else if (weather === 'Clouds') {
-    //     icon = 'CloudyNight';
-    // }
-
     document.querySelector('.weather-icon').setAttribute('src', 'images/' + icon + '.png');
-    console.log(icon);
-}    
+    console.log(icon, currentTime);
+}   
 
 unitToggle.addEventListener('click', () => {
     isCelsius = !isCelsius;
